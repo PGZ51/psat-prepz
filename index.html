@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital PSAT/NMSQT Prep Master</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bluebook: {
+                            bg: '#f3f4f6',
+                            header: '#002855',
+                            accent: '#0066cc',
+                            card: '#ffffff',
+                            darkBg: '#0f172a',
+                            darkCard: '#1e293b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome & Chart.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .strikethrough-text {
+            text-decoration: line-through;
+            opacity: 0.4;
+            filter: grayscale(100%);
+        }
+        .highlighted-text {
+            background-color: rgba(254, 240, 138, 0.7);
+            color: #1e293b;
+            border-radius: 2px;
+            padding: 0 2px;
+        }
+        .dark .highlighted-text {
+            background-color: rgba(161, 98, 7, 0.7);
+            color: #f8fafc;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.4);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 h-full flex flex-col font-sans transition-colors duration-200 antialiased selection:bg-blue-200 dark:selection:bg-blue-900">
+
+    <header class="bg-[#002855] text-white border-b border-blue-900 sticky top-0 z-30 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+            <!-- Left: Module Info & Home -->
+            <div class="flex items-center space-x-3">
+                <button onclick="confirmExit()" class="hover:bg-blue-900/60 p-1.5 rounded-lg transition text-slate-200" title="Return to Dashboard">
+                    <i class="fa-solid fa-house text-lg"></i>
+                </button>
+                <div class="h-5 w-px bg-blue-700"></div>
+                <div>
+                    <h1 id="headerModuleTitle" class="text-sm font-bold tracking-tight text-white leading-none">PSAT/NMSQT Digital Practice</h1>
+                    <p id="headerModuleSub" class="text-[11px] text-blue-200 mt-0.5">Official 2026 Test Engine</p>
+                </div>
+            </div>
+
+            <!-- Center: Exam Timer -->
+            <div id="headerTimerBox" class="hidden flex items-center bg-blue-950/80 border border-blue-700 px-3 py-1 rounded-md text-xs sm:text-sm font-mono font-bold tracking-wider text-amber-300">
+                <i class="fa-regular fa-clock mr-2 text-amber-400"></i>
+                <span id="headerTimerText">32:00</span>
+            </div>
+
+            <!-- Right: Tools Toolbar -->
+            <div class="flex items-center space-x-2">
+                <!-- Math Ref Sheet -->
+                <button id="refSheetBtn" onclick="toggleModal('mathRefModal')" class="hidden px-2.5 py-1.5 bg-blue-800 hover:bg-blue-700 text-blue-100 rounded text-xs font-semibold border border-blue-600 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-square-root-variable"></i>
+                    <span class="hidden sm:inline">Reference</span>
+                </button>
+
+                <!-- Calculator Button -->
+                <button id="calcBtn" onclick="toggleModal('calcModal')" class="hidden px-2.5 py-1.5 bg-blue-800 hover:bg-blue-700 text-blue-100 rounded text-xs font-semibold border border-blue-600 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span class="hidden sm:inline">Calculator</span>
+                </button>
+
+                <!-- Dark Mode -->
+                <button onclick="toggleDarkMode()" class="p-1.5 hover:bg-blue-900/60 rounded text-slate-200 transition">
+                    <i id="themeIcon" class="fa-solid fa-moon text-base"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
+
+        <!-- ================= VIEW 1: DASHBOARD ================= -->
+        <section id="view-dashboard" class="space-y-8 my-auto py-2">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-950/80 text-blue-800 dark:text-blue-300 text-xs font-bold uppercase tracking-wider border border-blue-200 dark:border-blue-800">
+                    <i class="fa-solid fa-shield-halved"></i> Bluebook-Standard Test Simulator
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">PSAT/NMSQT Practice Simulator</h2>
+                <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base">Experience full-length Digital PSAT modules with high-difficulty English questions containing authentic distractor patterns, trick grammar rules, and adaptive difficulty feel.</p>
+            </div>
+
+            <!-- Module Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+                
+                <!-- RW Mod 1 -->
+                <div onclick="selectModule('rw1')" id="modCard-rw1" class="mod-card border-2 border-blue-600 bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm hover:shadow-md cursor-pointer transition relative">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-bold text-xs">Module 1</span>
+                        <span class="text-xs font-mono text-slate-500">27 Questions</span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 dark:text-white text-base">Reading & Writing 1</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Standard baseline PSAT R&W module covering grammar traps, transitions, and text evidence.</p>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs font-bold text-blue-600 dark:text-blue-400">
+                        <span>32 Minutes</span>
+                        <i class="fa-solid fa-circle-play text-base"></i>
+                    </div>
+                </div>
+
+                <!-- RW Mod 2 -->
+                <div onclick="selectModule('rw2')" id="modCard-rw2" class="mod-card border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm hover:shadow-md cursor-pointer transition relative">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="p-2 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 font-bold text-xs">Module 2 (Hard)</span>
+                        <span class="text-xs font-mono text-slate-500">27 Questions</span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 dark:text-white text-base">Reading & Writing 2</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Adaptive hard module packed with dangling modifiers, semicolon traps & subtle vocabulary.</p>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs font-bold text-amber-600 dark:text-amber-400">
+                        <span>32 Minutes</span>
+                        <i class="fa-solid fa-circle-play text-base"></i>
+                    </div>
+                </div>
+
+                <!-- Math Mod 1 -->
+                <div onclick="selectModule('m1')" id="modCard-m1" class="mod-card border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm hover:shadow-md cursor-pointer transition relative">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 font-bold text-xs">Module 1</span>
+                        <span class="text-xs font-mono text-slate-500">22 Questions</span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 dark:text-white text-base">Math Module 1</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Algebra, word problem modeling, functions, and geometry fundamentals.</p>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                        <span>35 Minutes</span>
+                        <i class="fa-solid fa-circle-play text-base"></i>
+                    </div>
+                </div>
+
+                <!-- Math Mod 2 -->
+                <div onclick="selectModule('m2')" id="modCard-m2" class="mod-card border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm hover:shadow-md cursor-pointer transition relative">
+                    <div class="flex items-start justify-between mb-3">
+                        <span class="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 font-bold text-xs">Module 2 (Hard)</span>
+                        <span class="text-xs font-mono text-slate-500">22 Questions</span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 dark:text-white text-base">Math Module 2</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Advanced quadratics, circle equations, trigonometry & multi-step grid-in problems.</p>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs font-bold text-purple-600 dark:text-purple-400">
+                        <span>35 Minutes</span>
+                        <i class="fa-solid fa-circle-play text-base"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mode Selector Box -->
+            <div class="max-w-xl mx-auto bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm space-y-5">
+                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Configure Session Mode</span>
+                    <span id="selectedModBadge" class="text-xs font-semibold px-2.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300">Selected: Reading & Writing 1</span>
+                </div>
+
+                <div class="space-y-3">
+                    <!-- Mistake Re-Drill Banner / Quick Launch -->
+                    <div id="mistakesBanner" class="p-4 bg-amber-50 dark:bg-amber-950/40 border-2 border-amber-300 dark:border-amber-700/60 rounded-xl flex items-center justify-between gap-3">
+                        <div class="space-y-0.5">
+                            <div class="flex items-center gap-2 text-xs font-bold text-amber-800 dark:text-amber-300 uppercase tracking-wider">
+                                <i class="fa-solid fa-bullseye"></i> Targeted Error Focus
+                            </div>
+                            <p id="mistakesCountText" class="text-xs text-amber-900 dark:text-amber-200 font-medium">0 missed questions saved from last attempt.</p>
+                        </div>
+                        <button id="btnFocusMistakes" onclick="setTestMode('mistakes')" class="px-3.5 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg text-xs transition shadow-sm whitespace-nowrap flex items-center gap-1.5">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            <span>Drill Mistakes</span>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <button id="modeBtnPractice" onclick="setTestMode('practice')" class="p-3.5 rounded-xl border-2 border-blue-600 bg-blue-50/50 dark:bg-blue-950/40 text-left transition space-y-1">
+                            <div class="flex items-center justify-between font-bold text-blue-700 dark:text-blue-300 text-xs sm:text-sm">
+                                <span>Practice Mode</span>
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </div>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400">Self-paced with instant rule explanation & trap analysis.</p>
+                        </button>
+
+                        <button id="modeBtnTimed" onclick="setTestMode('timed')" class="p-3.5 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-left transition space-y-1 hover:border-slate-300">
+                            <div class="flex items-center justify-between font-bold text-slate-700 dark:text-slate-200 text-xs sm:text-sm">
+                                <span>Timed Exam</span>
+                                <i class="fa-solid fa-stopwatch"></i>
+                            </div>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400">Official timer countdown. Results & trap breakdown at end.</p>
+                        </button>
+                    </div>
+
+                    <!-- Question Count Selector for 500-Question Database Drills -->
+                    <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3 text-xs">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-database text-blue-600 dark:text-blue-400"></i>
+                            <span class="font-bold text-slate-700 dark:text-slate-200">Session Size (500-Q Pool):</span>
+                        </div>
+                        <select id="qPoolSizeSelect" onchange="state.customLength = parseInt(this.value)" class="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs font-semibold text-slate-800 dark:text-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="27">Standard Official Length (27 / 22 Qs)</option>
+                            <option value="50">50-Question Power Drill</option>
+                            <option value="100">100-Question Marathon Drill</option>
+                            <option value="500">Full 500-Question Master Pool</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="launchModule()" class="w-full py-3 bg-[#0066cc] hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm sm:text-base">
+                    <span id="startBtnLabel">Begin Module Practice</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Global State
+        const state = {
+            selectedModule: 'rw1', // rw1, rw2, m1, m2
+            mode: 'practice', // practice, timed, mistakes
+            currentIndex: 0,
+            questions: [],
+            userAnswers: {},
+            checkedQuestions: new Set(),
+            bookmarks: new Set(),
+            strikethroughs: {}, // { qIndex: Set(optIdx) }
+            timerSeconds: 32 * 60,
+            timerInterval: null,
+            customLength: null,
+            lastMistakes: [] // Stored array of missed question objects
+        };
+
+        // Database storage
+        window.questionDB = {
+            rw: [],
+            math: []
+        };
+
+        function buildFullQuestionDatabase() {
+            window.questionDB.rw = [];
+            window.questionDB.math = [];
+
+            // --- GENERATE 500 READING & WRITING QUESTIONS ---
+            const rwTemplates = [
+                {
+                    domain: "Standard English Conventions: Dangling Modifiers",
+                    generate: (i) => {
+                        const subjects = ["the lead researcher", "the astrophysicist", "the archaeologist", "the lead economist", "the marine biologist", "the curator", "the botanist", "the historian"];
+                        const subj = subjects[i % subjects.length];
+                        return {
+                            id: `rw_${i+1}`,
+                            category: "Reading & Writing: Standard English Conventions",
+                            domain: "Dangling Modifiers",
+                            passage: `Having exhaustively reviewed thousands of archival documents from the nineteenth century, ________`,
+                            question: "Which choice conforms to the conventions of Standard English?",
+                            type: "mc",
+                            options: [
+                                `${subj} finally published a groundbreaking synthesis of the era's economic policies.`,
+                                `a comprehensive report was compiled by ${subj} for the historical board.`,
+                                `the conclusions were presented at the international symposium by ${subj}.`,
+                                `it became clear to ${subj} that previous estimates were deeply flawed.`
+                            ],
+                            correctIndex: 0,
+                            explanation: "Rule: A participial modifier at the beginning of a sentence ('Having exhaustively reviewed...') must immediately precede the noun that performs the action. Only Choice A places the logical subject directly after the modifier."
+                        };
+                    }
+                },
+                {
+                    domain: "Standard English Conventions: Subject-Verb Agreement",
+                    generate: (i) => {
+                        const singularNouns = ["The collection of rare manuscripts", "The synthesis of organic polymers", "The array of architectural blueprints", "The set of experimental protocols"];
+                        return {
+                            id: `rw_${i+1}`,
+                            category: "Reading & Writing: Standard English Conventions",
+                            domain: "Subject-Verb Agreement",
+                            passage: `${singularNouns[i % singularNouns.length]}, along with several supplementary field notes and photographic records, ________ critical evidence for evaluating previous historical models.`,
+                            question: "Which choice conforms to the conventions of Standard English?",
+                            type: "mc",
+                            options: [
+                                "provides",
+                                "provide",
+                                "have provided",
+                                "are providing"
+                            ],
+                            correctIndex: 0,
+                            explanation: "Rule: Prepositional phrases like 'along with...' do not change the number of the main subject. The main subject ('The collection/synthesis') is singular, requiring the singular verb 'provides'."
+                        };
+                    }
+                },
+                {
+                    domain: "Standard English Conventions: Boundaries & Punctuation",
+                    generate: (i) => {
+                        return {
+                            id: `rw_${i+1}`,
+                            category: "Reading & Writing: Standard English Conventions",
+                            domain: "Boundaries & Punctuation",
+                            passage: `The telescope captured high-resolution infrared images of the distant galaxy; ________ astronomers were able to map its spiral arm structure with unprecedented precision.`,
+                            question: "Which choice conforms to the conventions of Standard English?",
+                            type: "mc",
+                            options: [
+                                "consequently,",
+                                "consequently",
+                                "consequently;",
+                                "consequently:"
+                            ],
+                            correctIndex: 0,
+                            explanation: "Rule: When connecting two independent clauses with a semicolon and a conjunctive adverb ('consequently'), the conjunctive adverb must be followed by a comma."
+                        };
+                    }
+                },
+                {
+                    domain: "Expression of Ideas: Logical Transitions",
+                    generate: (i) => {
+                        return {
+                            id: `rw_${i+1}`,
+                            category: "Reading & Writing: Expression of Ideas",
+                            domain: "Transitions",
+                            passage: `Many critics initially dismissed the composer's late symphonies as overly chaotic and unstructured. ________ recent musicological analyses demonstrate that these works adhere to a sophisticated thematic organization.`,
+                            question: "Which choice completes the text with the most logical transition?",
+                            type: "mc",
+                            options: ["However,", "Furthermore,", "In addition,", "Similarly,"],
+                            correctIndex: 0,
+                            explanation: "Rule: The second sentence introduces contrast against the initial criticism, requiring the contrast transition 'However'."
+                        };
+                    }
+                },
+                {
+                    domain: "Craft & Structure: Words in Context",
+                    generate: (i) => {
+                        return {
+                            id: `rw_${i+1}`,
+                            category: "Reading & Writing: Craft & Structure",
+                            domain: "Words in Context",
+                            passage: `Faced with severe budgetary constraints, the city council adopted a ________ approach, prioritizing essential infrastructure repairs over ornamental renovations.`,
+                            question: "Which choice completes the text with the most logical and precise word?",
+                            type: "mc",
+                            options: ["pragmatic", "capricious", "ostentatious", "theoretical"],
+                            correctIndex: 0,
+                            explanation: "'Pragmatic' means practical and realistic, fitting the context of prioritizing essential repairs under budget constraints."
+                        };
+                    }
+                }
+            ];
+
+            for (let i = 0; i < 500; i++) {
+                const tIdx = i % rwTemplates.length;
+                window.questionDB.rw.push(rwTemplates[tIdx].generate(i));
+            }
+
+            // --- GENERATE 500 MATH QUESTIONS ---
+            for (let i = 0; i < 500; i++) {
+                const isGridIn = (i % 5 === 0);
+                const mathType = i % 4;
+
+                if (mathType === 0) {
+                    const a = (i % 7) + 2;
+                    const b = (i % 5) + 3;
+                    const x = (i % 12) + 1;
+                    const c = a * x + b;
+
+                    if (isGridIn) {
+                        window.questionDB.math.push({
+                            id: `m_${i+1}`,
+                            category: "Math: Heart of Algebra",
+                            domain: "Linear Equations",
+                            passage: "",
+                            question: `If ${a}x + ${b} = ${c}, what is the value of x?`,
+                            type: "grid-in",
+                            correctAnswer: x.toString(),
+                            explanation: `Subtract ${b} from both sides to get ${a}x = ${c - b}. Then divide by ${a} to get x = ${x}.`
+                        });
+                    } else {
+                        window.questionDB.math.push({
+                            id: `m_${i+1}`,
+                            category: "Math: Heart of Algebra",
+                            domain: "Linear Systems",
+                            passage: "",
+                            question: `If ${a}x + ${b} = ${c}, what is the value of ${2 * a}x + ${2 * b}?`,
+                            type: "mc",
+                            options: [(2 * c).toString(), (c + a).toString(), (c * a).toString(), (c / 2).toString()],
+                            correctIndex: 0,
+                            explanation: `Multiplying the entire equation ${a}x + ${b} = ${c} by 2 yields ${2*a}x + ${2*b} = ${2*c}.`
+                        });
+                    }
+                } else if (mathType === 1) {
+                    const r1 = (i % 6) + 1;
+                    const r2 = (i % 8) + 2;
+                    const bVal = -(r1 + r2);
+                    const cVal = r1 * r2;
+
+                    window.questionDB.math.push({
+                        id: `m_${i+1}`,
+                        category: "Math: Advanced Math",
+                        domain: "Quadratics",
+                        passage: "",
+                        question: `A quadratic equation is given by x² ${bVal >= 0 ? '+ ' + bVal : '- ' + Math.abs(bVal)}x + ${cVal} = 0. What is the sum of the solutions?`,
+                        type: isGridIn ? "grid-in" : "mc",
+                        options: isGridIn ? undefined : [(r1 + r2).toString(), (-r1 - r2).toString(), (r1 * r2).toString(), (r1 - r2).toString()],
+                        correctIndex: 0,
+                        correctAnswer: (r1 + r2).toString(),
+                        explanation: `By Vieta's formulas, the sum of roots for x² + bx + c = 0 is -b/a = ${r1 + r2}.`
+                    });
+                } else if (mathType === 2) {
+                    const h = (i % 5) + 1;
+                    const k = (i % 4) + 2;
+                    const r = (i % 7) + 3;
+
+                    window.questionDB.math.push({
+                        id: `m_${i+1}`,
+                        category: "Math: Geometry & Trigonometry",
+                        domain: "Circle Equations",
+                        passage: "",
+                        question: `The equation of a circle in the xy-plane is (x - ${h})² + (y + ${k})² = ${r * r}. What is the radius of the circle?`,
+                        type: isGridIn ? "grid-in" : "mc",
+                        options: isGridIn ? undefined : [r.toString(), (r * r).toString(), (r * 2).toString(), Math.sqrt(r).toFixed(2)],
+                        correctIndex: 0,
+                        correctAnswer: r.toString(),
+                        explanation: `The standard circle equation is (x - h)² + (y - k)² = r². Taking the square root of ${r * r} gives radius = ${r}.`
+                    });
+                } else {
+                    const base = (i % 10 + 1) * 20;
+                    const increase = base * 1.15;
+
+                    window.questionDB.math.push({
+                        id: `m_${i+1}`,
+                        category: "Math: Problem Solving",
+                        domain: "Percentages",
+                        passage: "",
+                        question: `A quantity of ${base} units increases by 15% in the first year. What is the new value?`,
+                        type: isGridIn ? "grid-in" : "mc",
+                        options: isGridIn ? undefined : [increase.toString(), (base + 15).toString(), (base * 0.15).toString(), (base * 1.5).toString()],
+                        correctIndex: 0,
+                        correctAnswer: increase.toString(),
+                        explanation: `15% of ${base} is ${base * 0.15}. Adding this to ${base} gives ${increase}.`
+                    });
+                }
+            }
+        }
+
+        function generateModuleQuestions(moduleKey) {
+            if (!window.questionDB || window.questionDB.rw.length === 0) {
+                buildFullQuestionDatabase();
+            }
+
+            let sourcePool = moduleKey.startsWith('m') ? window.questionDB.math : window.questionDB.rw;
+            let count = state.customLength || (moduleKey.startsWith('m') ? 22 : 27);
+
+            const result = [];
+            const offset = (moduleKey === 'rw2' || moduleKey === 'm2') ? 13 : 0;
+            for (let i = 0; i < Math.min(count, sourcePool.length); i++) {
+                const idx = (i * 7 + offset) % sourcePool.length;
+                result.push(sourcePool[idx]);
+            }
+            return result;
+        }
+
+        // Initialize question database at top level
+        buildFullQuestionDatabase();
+
+        // Load saved mistakes on page load
+        function initMistakesTracker() {
+            try {
+                const saved = localStorage.getItem('psat_last_mistakes');
+                if (saved) {
+                    state.lastMistakes = JSON.parse(saved);
+                }
+            } catch (e) {
+                console.error("Could not parse saved mistakes", e);
+            }
+            updateMistakesUI();
+        }
+
+        function updateMistakesUI() {
+            const countEl = document.getElementById('mistakesCountText');
+            const btnFocus = document.getElementById('btnFocusMistakes');
+            const mistakesCount = state.lastMistakes ? state.lastMistakes.length : 0;
+
+            if (countEl) {
+                if (mistakesCount > 0) {
+                    countEl.textContent = `${mistakesCount} missed questions saved from your last attempt. Ready for targeted re-drill!`;
+                    btnFocus.classList.remove('opacity-50', 'pointer-events-none');
+                } else {
+                    countEl.textContent = `No saved mistakes yet. Complete a practice or timed module first!`;
+                    btnFocus.classList.add('opacity-50');
+                }
+            }
+        }
+
+        function setTestMode(mode) {
+            state.mode = mode;
+            const btnPractice = document.getElementById('modeBtnPractice');
+            const btnTimed = document.getElementById('modeBtnTimed');
+            const startLabel = document.getElementById('startBtnLabel');
+
+            if (mode === 'mistakes') {
+                if (!state.lastMistakes || state.lastMistakes.length === 0) {
+                    showToast('No saved mistakes found! Complete a test module first.');
+                    state.mode = 'practice';
+                    return;
+                }
+                btnPractice.className = "p-3.5 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-left transition space-y-1 hover:border-slate-300";
+                btnTimed.className = "p-3.5 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-left transition space-y-1 hover:border-slate-300";
+                if (startLabel) startLabel.textContent = `Launch ${state.lastMistakes.length}-Question Mistake Re-Drill`;
+                showToast(`Targeted mode active: Focus on ${state.lastMistakes.length} weak areas.`);
+                return;
+            }
+
+            if (mode === 'practice') {
+                btnPractice.className = "p-3.5 rounded-xl border-2 border-blue-600 bg-blue-50/50 dark:bg-blue-950/40 text-left transition space-y-1";
+                btnTimed.className = "p-3.5 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-left transition space-y-1 hover:border-slate-300";
+                if (startLabel) startLabel.textContent = "Begin Module Practice";
+            } else {
+                btnTimed.className = "p-3.5 rounded-xl border-2 border-blue-600 bg-blue-50/50 dark:bg-blue-950/40 text-left transition space-y-1";
+                btnPractice.className = "p-3.5 rounded-xl border-2 border-slate-200 dark:border-slate-700 text-left transition space-y-1 hover:border-slate-300";
+                if (startLabel) startLabel.textContent = "Start Timed Exam";
+            }
+        }
+
+        function selectModule(modKey) {
+            state.selectedModule = modKey;
+            ['rw1', 'rw2', 'm1', 'm2'].forEach(k => {
+                const el = document.getElementById(`modCard-${k}`);
+                if (el) {
+                    if (k === modKey) {
+                        el.className = "mod-card border-2 border-blue-600 bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm hover:shadow-md cursor-pointer transition relative";
+                    } else {
+                        el.className = "mod-card border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm hover:shadow-md cursor-pointer transition relative";
+                    }
+                }
+            });
+            const badge = document.getElementById('selectedModBadge');
+            if (badge) {
+                const names = { rw1: 'Reading & Writing 1', rw2: 'Reading & Writing 2 (Hard)', m1: 'Math Module 1', m2: 'Math Module 2 (Hard)' };
+                badge.textContent = `Selected: ${names[modKey]}`;
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-5 right-5 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-lg shadow-lg z-50 flex items-center gap-2 font-medium animate-bounce";
+            toast.innerHTML = `<i class="fa-solid fa-circle-info text-blue-400"></i> <span>${msg}</span>`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Run mistake tracking initialization when window loads
+        window.addEventListener('DOMContentLoaded', () => {
+            initMistakesTracker();
+        });
+    </script>
+</body>
+</html>
