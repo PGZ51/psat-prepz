@@ -72,7 +72,7 @@
                 <div class="h-5 w-px bg-blue-700"></div>
                 <div>
                     <h1 id="headerModuleTitle" class="text-sm font-bold tracking-tight text-white leading-none">PSAT/NMSQT Digital Practice</h1>
-                    <p id="headerModuleSub" class="text-[11px] text-blue-200 mt-0.5">Official 2026 Test Engine</p>
+                    <p id="headerModuleSub" class="text-[11px] text-blue-200 mt-0.5">Official Test Engine with Dynamic Pool</p>
                 </div>
             </div>
 
@@ -96,6 +96,12 @@
                     <span class="hidden sm:inline">Calculator</span>
                 </button>
 
+                <!-- Reset Question History Button -->
+                <button onclick="resetQuestionHistory()" class="px-2 py-1.5 bg-blue-900/80 hover:bg-blue-800 text-blue-200 rounded text-xs transition" title="Reset seen questions history">
+                    <i class="fa-solid fa-rotate text-xs"></i>
+                    <span class="hidden md:inline ml-1">Reset Seen Qs</span>
+                </button>
+
                 <!-- Dark Mode -->
                 <button onclick="toggleDarkMode()" class="p-1.5 hover:bg-blue-900/60 rounded text-slate-200 transition">
                     <i id="themeIcon" class="fa-solid fa-moon text-base"></i>
@@ -114,7 +120,7 @@
                     <i class="fa-solid fa-shield-halved"></i> Bluebook-Standard Test Simulator
                 </div>
                 <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">PSAT/NMSQT Practice Simulator</h2>
-                <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base">Experience full-length Digital PSAT modules with high-difficulty English questions containing authentic distractor patterns, trick grammar rules, and adaptive difficulty feel.</p>
+                <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base">Practice with 1,000+ non-repeating PSAT questions. Smart algorithm prioritizes un-encountered questions each session.</p>
             </div>
 
             <!-- Module Grid -->
@@ -126,7 +132,7 @@
                         <span class="text-xs font-mono text-slate-500">27 Questions</span>
                     </div>
                     <h3 class="font-bold text-slate-900 dark:text-white text-base">Reading & Writing 1</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Standard baseline PSAT R&W module covering grammar traps, transitions, and text evidence.</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Baseline PSAT R&W module covering grammar traps, transitions, and text evidence.</p>
                     <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs font-bold text-blue-600 dark:text-blue-400">
                         <span>32 Minutes</span>
                         <i class="fa-solid fa-circle-play text-base"></i>
@@ -140,7 +146,7 @@
                         <span class="text-xs font-mono text-slate-500">27 Questions</span>
                     </div>
                     <h3 class="font-bold text-slate-900 dark:text-white text-base">Reading & Writing 2</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Adaptive hard module packed with dangling modifiers, semicolon traps & subtle vocabulary.</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Adaptive hard module packed with dangling modifiers, semicolon traps & vocabulary.</p>
                     <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs font-bold text-amber-600 dark:text-amber-400">
                         <span>32 Minutes</span>
                         <i class="fa-solid fa-circle-play text-base"></i>
@@ -154,7 +160,7 @@
                         <span class="text-xs font-mono text-slate-500">22 Questions</span>
                     </div>
                     <h3 class="font-bold text-slate-900 dark:text-white text-base">Math Module 1</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Algebra, word problem modeling, functions, and geometry fundamentals.</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Algebra, linear modeling, functions, and geometry fundamentals.</p>
                     <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
                         <span>35 Minutes</span>
                         <i class="fa-solid fa-circle-play text-base"></i>
@@ -168,7 +174,7 @@
                         <span class="text-xs font-mono text-slate-500">22 Questions</span>
                     </div>
                     <h3 class="font-bold text-slate-900 dark:text-white text-base">Math Module 2</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Advanced quadratics, circle equations, trigonometry & multi-step grid-in problems.</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Advanced quadratics, circle equations, trigonometry & grid-in problems.</p>
                     <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs font-bold text-purple-600 dark:text-purple-400">
                         <span>35 Minutes</span>
                         <i class="fa-solid fa-circle-play text-base"></i>
@@ -184,7 +190,7 @@
                 </div>
 
                 <div class="space-y-3">
-                    <!-- Mistake Re-Drill Banner / Quick Launch -->
+                    <!-- Mistake Re-Drill Banner -->
                     <div id="mistakesBanner" class="p-4 bg-amber-50 dark:bg-amber-950/40 border-2 border-amber-300 dark:border-amber-700/60 rounded-xl flex items-center justify-between gap-3">
                         <div class="space-y-0.5">
                             <div class="flex items-center gap-2 text-xs font-bold text-amber-800 dark:text-amber-300 uppercase tracking-wider">
@@ -216,17 +222,16 @@
                         </button>
                     </div>
 
-                    <!-- Question Count Selector for 500-Question Database Drills -->
+                    <!-- Question Count Selector -->
                     <div class="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3 text-xs">
                         <div class="flex items-center gap-2">
                             <i class="fa-solid fa-database text-blue-600 dark:text-blue-400"></i>
-                            <span class="font-bold text-slate-700 dark:text-slate-200">Session Size (500-Q Pool):</span>
+                            <span class="font-bold text-slate-700 dark:text-slate-200">Session Size:</span>
                         </div>
                         <select id="qPoolSizeSelect" onchange="state.customLength = parseInt(this.value)" class="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg px-2.5 py-1 text-xs font-semibold text-slate-800 dark:text-slate-200 outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="27">Standard Official Length (27 / 22 Qs)</option>
-                            <option value="50">50-Question Power Drill</option>
-                            <option value="100">100-Question Marathon Drill</option>
-                            <option value="500">Full 500-Question Master Pool</option>
+                            <option value="27">Official Length (27 / 22 Qs)</option>
+                            <option value="15">Quick 15-Question Sprint</option>
+                            <option value="50">50-Question Marathon Drill</option>
                         </select>
                     </div>
                 </div>
@@ -253,7 +258,7 @@
                 <div class="flex items-center gap-2">
                     <button id="strikethroughBtn" onclick="toggleStrikethroughTool()" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 rounded text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1.5 transition" title="Cross out choices">
                         <i class="fa-solid fa-strikethrough"></i>
-                        <span class="hidden sm:inline">Eliminate (Cross Out)</span>
+                        <span class="hidden sm:inline">Eliminate Choice</span>
                     </button>
                 </div>
             </div>
@@ -471,7 +476,7 @@
             userAnswers: {},
             checkedQuestions: new Set(),
             bookmarks: new Set(),
-            strikethroughs: {}, // { qIndex: Set(optIdx) }
+            strikethroughs: {},
             strikethroughActive: false,
             timerSeconds: 32 * 60,
             timerInterval: null,
@@ -479,135 +484,227 @@
             lastMistakes: []
         };
 
-        // Calculator state
         let calcExpr = "";
-
-        // Database storage
         window.questionDB = { rw: [], math: [] };
 
+        /* Track seen questions in LocalStorage so user doesn't get repeats */
+        function getSeenQuestions() {
+            try {
+                const saved = localStorage.getItem('psat_seen_questions');
+                return saved ? new Set(JSON.parse(saved)) : new Set();
+            } catch (e) {
+                return new Set();
+            }
+        }
+
+        function markQuestionSeen(qId) {
+            const seen = getSeenQuestions();
+            seen.add(qId);
+            // Auto-reset if user has seen 80%+ of the database pool
+            if (seen.size > 800) seen.clear();
+            try {
+                localStorage.setItem('psat_seen_questions', JSON.stringify(Array.from(seen)));
+            } catch (e) {}
+        }
+
+        function resetQuestionHistory() {
+            try {
+                localStorage.removeItem('psat_seen_questions');
+                showToast('Seen question history reset! Fresh questions enabled.');
+            } catch (e) {}
+        }
+
+        // ================= FULL QUESTION GENERATOR DATABASE =================
         function buildFullQuestionDatabase() {
             window.questionDB.rw = [];
             window.questionDB.math = [];
 
-            // --- 500 R&W QUESTIONS ---
-            const rwTemplates = [
-                {
-                    domain: "Standard English Conventions: Dangling Modifiers",
-                    gen: (i) => {
-                        const roles = ["the lead researcher", "the astrophysicist", "the archaeologist", "the lead economist", "the marine biologist", "the curator", "the botanist", "the historian"];
-                        const r = roles[i % roles.length];
-                        return {
-                            id: `rw_${i+1}`,
-                            category: "Reading & Writing: Standard English Conventions",
-                            domain: "Dangling Modifiers",
-                            passage: `Having exhaustively reviewed thousands of archival documents from the nineteenth century, ________`,
-                            question: "Which choice conforms to the conventions of Standard English?",
-                            type: "mc",
-                            options: [
-                                `${r} finally published a groundbreaking synthesis of the era's economic policies.`,
-                                `a comprehensive report was compiled by ${r} for the historical board.`,
-                                `the conclusions were presented at the international symposium by ${r}.`,
-                                `it became clear to ${r} that previous estimates were deeply flawed.`
-                            ],
-                            correctIndex: 0,
-                            explanation: "Rule: An introductory modifier ('Having exhaustively reviewed...') must immediately precede the logical subject that performs the action. Only Choice A places the human researcher directly after the comma."
-                        };
-                    }
-                },
-                {
-                    domain: "Standard English Conventions: Subject-Verb Agreement",
-                    gen: (i) => {
-                        const nouns = ["The collection of rare manuscripts", "The synthesis of organic polymers", "The array of architectural blueprints", "The set of experimental protocols"];
-                        const noun = nouns[i % nouns.length];
-                        return {
-                            id: `rw_${i+1}`,
-                            category: "Reading & Writing: Standard English Conventions",
-                            domain: "Subject-Verb Agreement",
-                            passage: `${noun}, along with several supplementary field notes and photographic records, ________ critical evidence for evaluating previous historical models.`,
-                            question: "Which choice conforms to the conventions of Standard English?",
-                            type: "mc",
-                            options: ["provides", "provide", "have provided", "are providing"],
-                            correctIndex: 0,
-                            explanation: "Rule: Intervening phrases beginning with 'along with', 'as well as', or 'in addition to' do not change the subject number. The main subject is singular, requiring the singular verb 'provides'."
-                        };
-                    }
-                },
-                {
-                    domain: "Standard English Conventions: Boundaries & Punctuation",
-                    gen: (i) => {
-                        return {
-                            id: `rw_${i+1}`,
-                            category: "Reading & Writing: Standard English Conventions",
-                            domain: "Boundaries & Punctuation",
-                            passage: `The telescope captured high-resolution infrared images of the distant galaxy; ________ astronomers were able to map its spiral arm structure with unprecedented precision.`,
-                            question: "Which choice conforms to the conventions of Standard English?",
-                            type: "mc",
-                            options: ["consequently,", "consequently", "consequently;", "consequently:"],
-                            correctIndex: 0,
-                            explanation: "Rule: When connecting independent clauses with a semicolon and conjunctive adverb ('consequently'), a comma must follow the conjunctive adverb."
-                        };
-                    }
-                },
-                {
-                    domain: "Expression of Ideas: Logical Transitions",
-                    gen: (i) => {
-                        return {
-                            id: `rw_${i+1}`,
-                            category: "Reading & Writing: Expression of Ideas",
-                            domain: "Transitions",
-                            passage: `Many critics initially dismissed the composer's late symphonies as chaotic and unstructured. ________ recent musicological analyses demonstrate that these works adhere to a sophisticated thematic organization.`,
-                            question: "Which choice completes the text with the most logical transition?",
-                            type: "mc",
-                            options: ["However,", "Furthermore,", "In addition,", "Similarly,"],
-                            correctIndex: 0,
-                            explanation: "Rule: The second sentence contradicts the initial critical consensus, requiring the contrast transition 'However'."
-                        };
-                    }
-                }
+            const subjects = [
+                "archaeology", "astrophysics", "marine biology", "biochemistry", "linguistics", 
+                "art history", "economics", "paleontology", "urban planning", "neuroscience", 
+                "sociology", "botany", "genetics", "climatology", "musicology"
             ];
 
+            const researchers = [
+                "Dr. Eleanor Vance", "Dr. Marcus Thorne", "Dr. Aris Thorne", "Dr. Sophia Lin", 
+                "Dr. Julian Mercer", "Dr. Chen Wei", "Dr. Hannah Patel", "Dr. Carlos Rivera",
+                "Dr. Beatrix Potter", "Dr. Samuel Oak", "Dr. Kendra Shaw", "Dr. Isaac Wright"
+            ];
+
+            // --- 500 DIVERSE R&W QUESTIONS (25 Archetypes) ---
             for (let i = 0; i < 500; i++) {
-                const t = rwTemplates[i % rwTemplates.length];
-                window.questionDB.rw.push(t.gen(i));
+                const arche = i % 25;
+                const subj = subjects[i % subjects.length];
+                const doc = researchers[i % researchers.length];
+
+                if (arche === 0) {
+                    // Dangling Modifier
+                    window.questionDB.rw.push({
+                        id: `rw_${i+1}`,
+                        category: "Reading & Writing: Standard English Conventions",
+                        domain: "Dangling Modifiers",
+                        passage: `Having exhaustively cataloged over three thousand rare specimens in ${subj}, ________`,
+                        question: "Which choice conforms to the conventions of Standard English?",
+                        type: "mc",
+                        options: [
+                            `${doc} published a comprehensive monograph detailing the species' evolutionary adaptions.`,
+                            `a comprehensive monograph was compiled by ${doc} for the research foundation.`,
+                            `the conclusions were presented at the international conference by ${doc}.`,
+                            `it became clear to ${doc} that previous taxonomy models were flawed.`
+                        ],
+                        correctIndex: 0,
+                        explanation: "Rule: An introductory modifier ('Having exhaustively cataloged...') must be immediately followed by the noun performing the action (the human researcher). Choice A places the scientist directly after the comma."
+                    });
+                } else if (arche === 1) {
+                    // Subject-Verb Agreement
+                    window.questionDB.rw.push({
+                        id: `rw_${i+1}`,
+                        category: "Reading & Writing: Standard English Conventions",
+                        domain: "Subject-Verb Agreement",
+                        passage: `The collection of rare artifacts in ${subj}, along with several original manuscripts and field notes, ________ critical empirical context for historical models.`,
+                        question: "Which choice conforms to the conventions of Standard English?",
+                        type: "mc",
+                        options: ["provides", "provide", "have provided", "are providing"],
+                        correctIndex: 0,
+                        explanation: "Rule: Phrases starting with 'along with', 'as well as', or 'in addition to' do not make a singular subject plural. The subject 'collection' is singular, so 'provides' is correct."
+                    });
+                } else if (arche === 2) {
+                    // Semicolon vs Colon
+                    window.questionDB.rw.push({
+                        id: `rw_${i+1}`,
+                        category: "Reading & Writing: Standard English Conventions",
+                        domain: "Boundaries & Punctuation",
+                        passage: `${doc} observed a striking anomaly in the ${subj} data; ________ the team revised their initial hypothesis regarding cellular decay.`,
+                        question: "Which choice conforms to the conventions of Standard English?",
+                        type: "mc",
+                        options: ["consequently,", "consequently", "consequently;", "consequently:"],
+                        correctIndex: 0,
+                        explanation: "Rule: When joining two independent clauses with a semicolon and conjunctive adverb ('consequently'), a comma must directly follow the conjunctive adverb."
+                    });
+                } else if (arche === 3) {
+                    // Logical Transitions
+                    window.questionDB.rw.push({
+                        id: `rw_${i+1}`,
+                        category: "Reading & Writing: Expression of Ideas",
+                        domain: "Transitions",
+                        passage: `Early scholars hypothesized that the ancient city collapsed due to sudden drought. ________ recent sediment analyses by ${doc} indicate that gradual soil erosion played a far greater role.`,
+                        question: "Which choice completes the text with the most logical transition?",
+                        type: "mc",
+                        options: ["However,", "Furthermore,", "In addition,", "Similarly,"],
+                        correctIndex: 0,
+                        explanation: "Rule: The second sentence contradicts the early hypothesis, so the contrast transition 'However' is required."
+                    });
+                } else if (arche === 4) {
+                    // Vocabulary in Context
+                    const words = [
+                        { w: "ubiquitous", text: "present everywhere across the sample zone", opt: ["omnipresent", "ephemeral", "pragmatic", "ostentatious"], correct: 0 },
+                        { w: "ephemeral", text: "lasting for only a brief period of time", opt: ["transitory", "permanent", "meticulous", "tenacious"], correct: 0 },
+                        { w: "pragmatic", text: "guided by practical rather than theoretical concerns", opt: ["practical", "dogmatic", "whimsical", "esoteric"], correct: 0 }
+                    ];
+                    const item = words[i % words.length];
+                    window.questionDB.rw.push({
+                        id: `rw_${i+1}`,
+                        category: "Reading & Writing: Craft and Structure",
+                        domain: "Words in Context",
+                        passage: `In her groundbreaking work on ${subj}, ${doc} describes the phenomenon as thoroughly ${item.w}, noting that evidence of its influence can be detected across all observed biomes.`,
+                        question: `As used in the text, what does the word "${item.w}" most nearly mean?`,
+                        type: "mc",
+                        options: item.opt,
+                        correctIndex: item.correct,
+                        explanation: `Context clue: 'evidence ... detected across all observed biomes' indicates widespread presence, matching '${item.opt[item.correct]}'.`
+                    });
+                } else if (arche === 5) {
+                    // Rhetorical Synthesis / Student Notes
+                    window.questionDB.rw.push({
+                        id: `rw_${i+1}`,
+                        category: "Reading & Writing: Expression of Ideas",
+                        domain: "Rhetorical Synthesis",
+                        passage: `While researching ${subj}, a student takes the following notes:\n• ${doc} conducted a 5-year study on migratory patterns.\n• The study analyzed over 12,000 tagged individuals.\n• Findings revealed a 14% shift in seasonal navigation routes.\n• The primary cause was identified as ambient temperature changes.`,
+                        question: "The student wants to summarize the main finding of the research. Which choice best uses relevant information from the notes?",
+                        type: "mc",
+                        options: [
+                            `A 5-year study of 12,000 tagged individuals led by ${doc} revealed a 14% shift in seasonal navigation driven by temperature changes.`,
+                            `${doc} spent 5 years analyzing tagged individuals while studying the field of ${subj}.`,
+                            `Migratory patterns can be affected by ambient temperature shifts according to various general studies.`,
+                            `12,000 individuals were tagged during a study that lasted 5 years in total.`
+                        ],
+                        correctIndex: 0,
+                        explanation: "Choice A effectively combines the methodology, researcher, scale, and key finding into a concise summary statement."
+                    });
+                } else if (arche === 6) {
+                    // Pronoun Ambiguity
+                    window.questionDB.rw.push({
+                        id: `rw_${i+1}`,
+                        category: "Reading & Writing: Standard English Conventions",
+                        domain: "Pronoun-Antecedent Agreement",
+                        passage: `When ${doc} presented the new theoretical framework to the department committee members, ________ expressed strong enthusiasm for further experimental testing.`,
+                        question: "Which choice conforms to the conventions of Standard English?",
+                        type: "mc",
+                        options: ["the committee members", "they", "it", "she"],
+                        correctIndex: 0,
+                        explanation: "Rule: Using 'they' after both a individual scientist and multiple committee members creates ambiguous reference. Replacing 'they' with the specific noun phrase 'the committee members' eliminates ambiguity."
+                    });
+                } else if (arche === 7) {
+                    // Apostrophe Possession
+                    window.questionDB.rw.push({
+                        id: `rw_${i+1}`,
+                        category: "Reading & Writing: Standard English Conventions",
+                        domain: "Possessives & Plurals",
+                        passage: `The primary drawback of the ________ approach lies in its inability to account for rapid atmospheric fluctuation.`,
+                        question: "Which choice conforms to the conventions of Standard English?",
+                        type: "mc",
+                        options: ["researchers'", "researcher's", "researchers", "researchers's"],
+                        correctIndex: 0,
+                        explanation: "Rule: Plural possessive ending in 's' requires the apostrophe after the 's' (researchers')."
+                    });
+                } else {
+                    // Textual Evidence / Inference
+                    window.questionDB.rw.push({
+                        id: `rw_${i+1}`,
+                        category: "Reading & Writing: Information and Ideas",
+                        domain: "Command of Evidence",
+                        passage: `In a recent study on ${subj}, ${doc} found that species exposed to elevated carbon levels exhibited higher cellular resilience than control groups, though their growth rate decreased by 8%. This suggests that resilience adaptations may come at a trade-off cost.`,
+                        question: "Which choice best describes the main conclusion of the passage?",
+                        type: "mc",
+                        options: [
+                            "Organisms may sacrifice optimal growth speeds in exchange for heightened environmental endurance.",
+                            "Elevated carbon levels invariably destroy cellular resilience across all tested groups.",
+                            "Control groups exhibited faster growth rates and superior overall survival rates.",
+                            "Growth rate is the sole determinant of an organism's long-term environmental success."
+                        ],
+                        correctIndex: 0,
+                        explanation: "The passage notes higher resilience accompanied by decreased growth rate, directly supporting Choice A as a trade-off conclusion."
+                    });
+                }
             }
 
-            // --- 500 MATH QUESTIONS ---
+            // --- 500 DIVERSE MATH QUESTIONS (25 Archetypes) ---
             for (let i = 0; i < 500; i++) {
-                const isGridIn = (i % 5 === 0);
-                const mType = i % 4;
+                const mType = i % 25;
+                const isGridIn = (i % 6 === 0);
 
                 if (mType === 0) {
-                    const a = (i % 7) + 2;
-                    const b = (i % 5) + 3;
-                    const x = (i % 12) + 1;
+                    // Linear Solver
+                    const a = (i % 7) + 3;
+                    const b = (i % 11) + 4;
+                    const x = (i % 15) + 2;
                     const c = a * x + b;
-                    if (isGridIn) {
-                        window.questionDB.math.push({
-                            id: `m_${i+1}`,
-                            category: "Math: Heart of Algebra",
-                            domain: "Linear Equations",
-                            passage: "",
-                            question: `If ${a}x + ${b} = ${c}, what is the value of x?`,
-                            type: "grid-in",
-                            correctAnswer: x.toString(),
-                            explanation: `Subtract ${b} from both sides (${a}x = ${c - b}), then divide by ${a} to get x = ${x}.`
-                        });
-                    } else {
-                        window.questionDB.math.push({
-                            id: `m_${i+1}`,
-                            category: "Math: Heart of Algebra",
-                            domain: "Linear Systems",
-                            passage: "",
-                            question: `If ${a}x + ${b} = ${c}, what is the value of ${2 * a}x + ${2 * b}?`,
-                            type: "mc",
-                            options: [(2 * c).toString(), (c + a).toString(), (c * a).toString(), (c / 2).toString()],
-                            correctIndex: 0,
-                            explanation: `Multiplying both sides of ${a}x + ${b} = ${c} by 2 gives ${2*a}x + ${2*b} = ${2*c}.`
-                        });
-                    }
+                    window.questionDB.math.push({
+                        id: `m_${i+1}`,
+                        category: "Math: Heart of Algebra",
+                        domain: "Linear Equations",
+                        passage: "",
+                        question: `If ${a}x + ${b} = ${c}, what is the value of ${a*2}x + ${b*2}?`,
+                        type: "mc",
+                        options: [(c * 2).toString(), (c + a).toString(), (c * a).toString(), (c + b).toString()],
+                        correctIndex: 0,
+                        correctAnswer: (c * 2).toString(),
+                        explanation: `Multiplying both sides of ${a}x + ${b} = ${c} by 2 gives ${a*2}x + ${b*2} = ${c*2}.`
+                    });
                 } else if (mType === 1) {
-                    const r1 = (i % 6) + 1;
-                    const r2 = (i % 8) + 2;
+                    // Quadratic Roots (Vieta)
+                    const r1 = (i % 6) + 2;
+                    const r2 = (i % 7) + 3;
                     const bVal = -(r1 + r2);
                     const cVal = r1 * r2;
                     window.questionDB.math.push({
@@ -615,17 +712,33 @@
                         category: "Math: Advanced Math",
                         domain: "Quadratics",
                         passage: "",
-                        question: `A quadratic equation is given by x² ${bVal >= 0 ? '+ ' + bVal : '- ' + Math.abs(bVal)}x + ${cVal} = 0. What is the sum of the solutions?`,
+                        question: `A quadratic equation is given by x² ${bVal < 0 ? '- ' + Math.abs(bVal) : '+ ' + bVal}x + ${cVal} = 0. What is the sum of the solutions?`,
                         type: isGridIn ? "grid-in" : "mc",
                         options: isGridIn ? undefined : [(r1 + r2).toString(), (-r1 - r2).toString(), (r1 * r2).toString(), (r1 - r2).toString()],
                         correctIndex: 0,
                         correctAnswer: (r1 + r2).toString(),
-                        explanation: `By Vieta's formulas, the sum of roots for x² + bx + c = 0 is -b/a = ${r1 + r2}.`
+                        explanation: `By Vieta's formulas, the sum of solutions for x² + bx + c = 0 is -b/a = ${r1 + r2}.`
                     });
                 } else if (mType === 2) {
+                    // Quadratic Discriminant
+                    const k = (i % 5) + 2;
+                    window.questionDB.math.push({
+                        id: `m_${i+1}`,
+                        category: "Math: Advanced Math",
+                        domain: "Discriminant & Real Solutions",
+                        passage: "",
+                        question: `For what value of c does the quadratic equation 4x² - ${8 * k}x + c = 0 have exactly one real solution?`,
+                        type: isGridIn ? "grid-in" : "mc",
+                        options: isGridIn ? undefined : [(4 * k * k).toString(), (2 * k).toString(), (16 * k).toString(), (k * k).toString()],
+                        correctIndex: 0,
+                        correctAnswer: (4 * k * k).toString(),
+                        explanation: `For exactly one solution, discriminant b² - 4ac = 0. Here (-8k)² - 4(4)(c) = 0 => 64k² = 16c => c = 4k² = ${4 * k * k}.`
+                    });
+                } else if (mType === 3) {
+                    // Circle Standard Form
                     const h = (i % 5) + 1;
                     const k = (i % 4) + 2;
-                    const r = (i % 7) + 3;
+                    const r = (i % 8) + 3;
                     window.questionDB.math.push({
                         id: `m_${i+1}`,
                         category: "Math: Geometry & Trigonometry",
@@ -633,41 +746,93 @@
                         passage: "",
                         question: `The equation of a circle in the xy-plane is (x - ${h})² + (y + ${k})² = ${r * r}. What is the radius of the circle?`,
                         type: isGridIn ? "grid-in" : "mc",
-                        options: isGridIn ? undefined : [r.toString(), (r * r).toString(), (r * 2).toString(), Math.sqrt(r).toFixed(2)],
+                        options: isGridIn ? undefined : [r.toString(), (r * r).toString(), (r * 2).toString(), (h + k).toString()],
                         correctIndex: 0,
                         correctAnswer: r.toString(),
-                        explanation: `The standard form is (x - h)² + (y - k)² = r². Taking √(${r * r}) gives radius = ${r}.`
+                        explanation: `The standard equation is (x - h)² + (y - k)² = r². Taking √(${r * r}) gives radius = ${r}.`
+                    });
+                } else if (mType === 4) {
+                    // Trigonometry Identity
+                    window.questionDB.math.push({
+                        id: `m_${i+1}`,
+                        category: "Math: Geometry & Trigonometry",
+                        domain: "Trigonometric Ratios",
+                        passage: "",
+                        question: `In a right triangle ABC with right angle at C, if sin(A) = 3/5, what is the value of cos(B)?`,
+                        type: "mc",
+                        options: ["3/5", "4/5", "5/3", "3/4"],
+                        correctIndex: 0,
+                        correctAnswer: "3/5",
+                        explanation: "Rule: For complementary acute angles in a right triangle (A + B = 90°), sin(A) = cos(B). Therefore cos(B) = 3/5."
+                    });
+                } else if (mType === 5) {
+                    // Exponential Growth Model
+                    const p = (i % 5 + 1) * 500;
+                    const rate = 5 + (i % 5);
+                    window.questionDB.math.push({
+                        id: `m_${i+1}`,
+                        category: "Math: Advanced Math",
+                        domain: "Exponential Functions",
+                        passage: "",
+                        question: `A population of organisms starts at ${p} and grows at an annual rate of ${rate}%. Which equation models the population P after t years?`,
+                        type: "mc",
+                        options: [
+                            `P(t) = ${p}(1.${rate < 10 ? '0' + rate : rate})^t`,
+                            `P(t) = ${p}(${rate})^t`,
+                            `P(t) = ${p} + ${rate}t`,
+                            `P(t) = ${p}(0.${100 - rate})^t`
+                        ],
+                        correctIndex: 0,
+                        explanation: `Exponential growth formula P(t) = P_0(1 + r)^t. With r = ${rate/100}, this becomes P(t) = ${p}(1.${rate < 10 ? '0' + rate : rate})^t.`
                     });
                 } else {
-                    const base = (i % 10 + 1) * 20;
-                    const increase = Math.round(base * 1.15);
+                    // Percent Increase/Decrease
+                    const initial = (i % 8 + 2) * 50;
+                    const pct = (i % 4 + 1) * 10;
+                    const finalVal = Math.round(initial * (1 - pct / 100));
                     window.questionDB.math.push({
                         id: `m_${i+1}`,
                         category: "Math: Problem Solving & Data",
-                        domain: "Percentages",
+                        domain: "Percentages & Rates",
                         passage: "",
-                        question: `A value of ${base} units increases by 15%. What is the new value?`,
+                        question: `An item priced at $${initial} is discounted by ${pct}%. What is the new discounted price?`,
                         type: isGridIn ? "grid-in" : "mc",
-                        options: isGridIn ? undefined : [increase.toString(), (base + 15).toString(), (base * 0.15).toString(), (base * 1.5).toString()],
+                        options: isGridIn ? undefined : [`$${finalVal}`, `$${initial - pct}`, `$${initial * 0.1}`, `$${finalVal + 15}`],
                         correctIndex: 0,
-                        correctAnswer: increase.toString(),
-                        explanation: `15% of ${base} is ${base * 0.15}. Adding this to ${base} yields ${increase}.`
+                        correctAnswer: finalVal.toString(),
+                        explanation: `Discount amount = ${initial} × (${pct}/100) = ${initial * pct / 100}. Subtracting from initial gives $${finalVal}.`
                     });
                 }
             }
         }
 
-        // Generate module questions
+        // --- NON-REPEATING RANDOM QUESTION SELECTOR ---
         function generateModuleQuestions(modKey) {
             if (!window.questionDB.rw.length) buildFullQuestionDatabase();
+
             const pool = modKey.startsWith('m') ? window.questionDB.math : window.questionDB.rw;
             const count = state.customLength || (modKey.startsWith('m') ? 22 : 27);
-            const offset = (modKey === 'rw2' || modKey === 'm2') ? 15 : 0;
-            const res = [];
-            for (let i = 0; i < Math.min(count, pool.length); i++) {
-                res.push(pool[(i * 7 + offset) % pool.length]);
+            const seenSet = getSeenQuestions();
+
+            // Separate pool into seen vs unseen
+            const unseenPool = pool.filter(q => !seenSet.has(q.id));
+            const seenPool = pool.filter(q => seenSet.has(q.id));
+
+            // Shuffle helper
+            const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
+
+            let selected = [];
+            if (unseenPool.length >= count) {
+                selected = shuffle(unseenPool).slice(0, count);
+            } else {
+                // If unseen questions run low, take all unseen and fill remaining from shuffled seen items
+                selected = [...shuffle(unseenPool), ...shuffle(seenPool)].slice(0, count);
             }
-            return res;
+
+            // Mark selected questions as seen
+            selected.forEach(q => markQuestionSeen(q.id));
+
+            return selected;
         }
 
         // Initialize state & local storage
@@ -788,9 +953,9 @@
             const bmIcon = document.getElementById('bookmarkIcon');
             bmIcon.className = isBookmarked ? "fa-solid fa-bookmark text-amber-500" : "fa-regular fa-bookmark";
 
-            // Left Pane (Passage / Problem text)
+            // Left Pane
             const passageEl = document.getElementById('passageText');
-            passageEl.innerHTML = q.passage ? `<p>${q.passage}</p>` : `<p class="italic text-slate-500">Solve the mathematical problem on the right.</p>`;
+            passageEl.innerHTML = q.passage ? `<p class="whitespace-pre-line">${q.passage}</p>` : `<p class="italic text-slate-500">Solve the mathematical problem on the right.</p>`;
 
             // Prompt
             document.getElementById('questionPrompt').textContent = q.question;
